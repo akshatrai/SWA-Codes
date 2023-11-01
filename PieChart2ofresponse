@@ -1,0 +1,18 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from google.colab import files
+data = files.upload()
+df = pd.read_excel("/content/Tata Survey.xlsx")
+df.head()
+age_counts = df['age'].value_counts()
+category_1_count = age_counts.get('15-20', 0)
+category_2_count = age_counts.get('21-25', 0)
+category_3_count = age_counts.get('26-35', 0)
+
+categories = ['15-20', '21-25', '26-35']
+counts = [category_1_count, category_2_count, category_3_count]
+plt.figure(figsize=(6, 6))
+plt.pie(counts, labels=categories, autopct='%1.1f%%', startangle=140, shadow=False)
+plt.axis('equal')
+plt.title("Age Category Distribution")
+plt.show()
