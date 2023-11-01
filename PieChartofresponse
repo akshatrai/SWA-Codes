@@ -1,0 +1,12 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from google.colab import files
+data = files.upload()
+df = pd.read_excel("/content/Tata Survey.xlsx")
+df.head()
+age_counts = df['gender'].value_counts()
+plt.figure(figsize=(6, 6))
+plt.pie(age_counts, labels=age_counts.index, autopct='%1.1f%%', startangle=140)
+plt.title('Gender Distribution')
+plt.axis('equal')  # Equal aspect ratio ensures that the pie is drawn as a circle.
+plt.show()
