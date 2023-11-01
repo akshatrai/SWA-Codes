@@ -1,0 +1,58 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from google.colab import files
+
+data = files.upload()
+
+df = pd.read_excel("/content/Tata Survey (1).xlsx")
+df = df.drop(columns=['What is your age?', 'What is your Gender?*'], errors='ignore')
+
+selected_columns_brand = df[['b1', 'b2', 'b3']]
+
+selected_columns_innovation = df[['i1', 'i2', 'i3']]
+selected_columns_sust = df[['sus1', 'sus2', 'sus3']]
+selected_columns_trust = df[['t1', 't2', 't3']]
+selected_columns_satis = df[['sat1','sat2','sat3']]
+selected_columns_purchint = df[['pi1']]
+
+mean_b1 = selected_columns_brand['b1'].mean()
+mean_b2 = selected_columns_brand['b2'].mean()
+mean_b3 = selected_columns_brand['b3'].mean()
+mean_brand = (mean_b1+mean_b2+mean_b3)/3
+
+mean_i1 = selected_columns_innovation['i1'].mean()
+mean_i2 = selected_columns_innovation['i2'].mean()
+mean_i3 = selected_columns_innovation['i3'].mean()
+mean_inn = (mean_i1+mean_i2+mean_i3)/3
+
+mean_sus1 = selected_columns_sust['sus1'].mean()
+mean_sus2 = selected_columns_sust['sus2'].mean()
+mean_sus3 = selected_columns_sust['sus3'].mean()
+mean_sust = (mean_sus1+mean_sus2+mean_sus3)/3
+
+mean_t1 = selected_columns_trust['t1'].mean()
+mean_t2 = selected_columns_trust['t2'].mean()
+mean_t3 = selected_columns_trust['t3'].mean()
+mean_trust = (mean_t1+mean_t2+mean_t3)/3
+
+mean_sat1 = selected_columns_satis['sat1'].mean()
+mean_sat2 = selected_columns_satis['sat2'].mean()
+mean_sat3 = selected_columns_satis['sat3'].mean()
+mean_satis = (mean_sat1+mean_sat2+mean_sat3)/3
+
+mean_pi = selected_columns_purchint['pi1'].mean()
+
+constructs_data = {
+    "Construct": ["Brand Image", "Innovation", "Sustainability", "Trust", "Satisfaction", "Purchase Intention"],
+    "Average Response": [mean_brand, mean_inn, mean_sust, mean_trust, mean_satis, mean_pi]
+}
+
+avg_constructs = pd.DataFrame(constructs_data)
+
+plt.figure(figsize=(10, 6))
+plt.bar(avg_constructs["Construct"], avg_constructs["Average Response"])
+plt.xlabel("Construct")
+plt.ylabel("Average Response")
+plt.title("Average Response for Each Construct")
+plt.ylim(1, 5)  
+plt.xticks(rotation=45)
